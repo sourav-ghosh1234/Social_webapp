@@ -6,7 +6,7 @@ const {
   followUser,
   unfollowUser
  
-} = require("../controllers/Profile");
+} = require("../controllers/profile");
 
 router.get("/getprofilepost/:id", requireLogin, getUser);
 
