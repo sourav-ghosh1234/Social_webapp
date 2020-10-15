@@ -9,7 +9,7 @@ const {
   unLikepost,
   comments,
   deletePost,getsubPost
-} = require("../controllers/post");
+} = require("../controllers/Post");
 
 router.post("/createpost", requireLogin, createPost);
 router.get("/getpost", requireLogin, getPost);
