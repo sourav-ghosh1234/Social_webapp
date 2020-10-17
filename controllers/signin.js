@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer=require("nodemailer");
 const crypto=require("crypto")
+require("dotenv").config();
 
 var transporter=nodemailer.createTransport({
   service:"gmail",
@@ -85,7 +86,7 @@ exports.resetPassword=(req,res)=>{
              subject:"Password Reset",
              html:`
              <p>You requested for reset password</p>
-             <h2>click in this <a href="http://localhost:3000/reset/${token}">Link</a> to reset password</h2>
+             <h2>click in this <a href="${process.env.EMAIL_LINK}/reset/${token}">Link</a> to reset password</h2>
              `
            })
            res.json({message:"check your email"})
