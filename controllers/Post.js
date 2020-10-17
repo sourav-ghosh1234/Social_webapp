@@ -13,6 +13,7 @@ exports.getPost = (req, res) => {
   Post.find()
     .populate("postedby", "_id name")
     .populate("comments.postedby","_id name")
+    .sort('-createdAt')
     .then((result) => {
       res.status(200).send(result);
     });
@@ -20,6 +21,7 @@ exports.getPost = (req, res) => {
 exports.getsubPost = (req, res) => {
   Post.find({postedby:{$in:req.user.followings}})
     .populate("postedby", "_id name")
+    .sort('-createdAt')
     .populate("comments.postedby","_id name")
     .then((result) => {
       res.status(200).send(result);
@@ -111,3 +113,4 @@ exports.deletePost=async(req,res)=>{
   res.json({result:a});
  
 }
+

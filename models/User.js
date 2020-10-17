@@ -14,6 +14,8 @@ const userschema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resetToken:String,
+  expireToken:Date,
   followers:[{type:ObjectId,ref:"User"}],
   followings:[{type:ObjectId,ref:"User"}],
   pic:{

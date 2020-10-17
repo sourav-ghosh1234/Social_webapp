@@ -1,37 +1,34 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../../App";
+import { Link, useHistory,useParams } from "react-router-dom";
 import M from "materialize-css";
 
-const Signin = () => {
-  const { state, dispatch } = useContext(UserContext);
+const Newpassword = () => {
   const history = useHistory();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {token}=useParams();
+  console.log(token)
   function postData() {
-    console.log(email, password);
-    fetch("/app/signin", {
+    
+    fetch("/app/newpassword", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
+        
         password: password,
+        token:token
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-        localStorage.setItem("jwt", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-       
-        dispatch({ type: "USER", payload: data.user });
+        
         if (data.error) {
           M.toast({ html: data.error, classes: "#f44336 red" });
         } else {
-          M.toast({ html: "signed in", classes: "#4caf50 green" });
-          history.push("/");
+          M.toast({ html: data.message, classes: "#4caf50 green" });
+          history.push("/signin");
         }
         console.log(data);
       });
@@ -40,17 +37,12 @@ const Signin = () => {
     <div className="mycard">
       <div className="card auth-card">
         <h2>Instagram</h2>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-        />
+   
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter your password"
+          placeholder="Enter your New password"
         />
         <button
           className="btn #5c6bc0 indigo lighten-1"
@@ -58,17 +50,12 @@ const Signin = () => {
           name="action"
           onClick={() => postData()}
         >
-          Sign In
+          Change Password
         </button>
-        <h5>
-          <Link to="/signup">Dont have an account?</Link>
-        </h5>
-        <h6>
-          <Link to="/reset">Forgot password ?</Link>
-        </h6>
+        
       </div>
     </div>
   );
 };
 
-export default Signin;
+export default Newpassword;
